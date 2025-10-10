@@ -130,4 +130,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = ('/home/mydocuz/qrcode/static_files',)
 STATIC_ROOT = '/home/mydocuz/qrcode/static'
 MEDIA_URL = 'media/'
-MEDIA_ROOT = '/home/mydocuz/qrcode/media'
+MEDIA_ROOT = '/home/mydocuz/public_html/media'
