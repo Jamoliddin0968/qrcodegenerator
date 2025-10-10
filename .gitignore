@@ -1,0 +1,7 @@
+db.sqlite3
+files
+env/
+.pyc
+*.pyc
+pyc
+media
