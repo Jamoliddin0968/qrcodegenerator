@@ -51,6 +51,7 @@ def upload_docx(request):
         run_code.bold = True
         run_code.font.size = Pt(20)  # shrift kattaligi
         p_code.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p_code.alignment = WD_ALIGN_PARAGRAPH.RIGHT
         cell_code.width = Inches(2)
 
         # o'ng ustunda QR rasm
