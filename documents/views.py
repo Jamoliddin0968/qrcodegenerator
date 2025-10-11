@@ -41,29 +41,26 @@ def upload_docx(request):
 
         # DOCX ga QR va kod yozamiz
         doc = Document(new_path)
-        table = doc.add_table(rows=1, cols=3)
+        table = doc.add_table(rows=1, cols=2)
         table.autofit = False
+        table.alignment = WD_TABLE_ALIGNMENT.RIGHT
 
-        # chap ustunda kod
-        cell_code = table.rows[0].cells[1]
+        # Kod (chapda)
+        cell_code = table.rows[0].cells[0]
         p_code = cell_code.paragraphs[0]
-        run_code = p_code.add_run(f"Kod: {db_file.code}")
+        run_code = p_code.add_run(f"{db_file.code}")
         run_code.bold = True
-        run_code.font.size = Pt(20)  # shrift kattaligi
+        run_code.font.size = Pt(38)  # kattaroq shrift
         p_code.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        p_code.alignment = WD_ALIGN_PARAGRAPH.RIGHT
         cell_code.width = Inches(2)
 
-        # o'ng ustunda QR rasm
-        cell_qr = table.rows[0].cells[2]
+        # QR (o‘ngda)
+        cell_qr = table.rows[0].cells[1]
         p_qr = cell_qr.paragraphs[0]
         run_qr = p_qr.add_run()
-        run_qr.add_picture(buf, width=Inches(1.3))
+        run_qr.add_picture(buf, width=Inches(1.5))
         p_qr.alignment = WD_ALIGN_PARAGRAPH.RIGHT
         cell_qr.width = Inches(3)
-
-        # Jadvalni o'ng tomonga suramiz
-        table.alignment = WD_TABLE_ALIGNMENT.RIGHT
         doc.save(new_path)
 
         db_file.file.name = f"uploads/{new_filename}"
