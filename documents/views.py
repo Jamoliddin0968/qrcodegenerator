@@ -14,60 +14,70 @@ def upload_docx(request):
     if request.method == 'POST' and request.FILES.get('file'):
         uploaded_file = request.FILES['file']
         fs = FileSystemStorage()
-
-        # Faylni vaqtincha saqlaymiz
         temp_name = fs.save(uploaded_file.name, uploaded_file)
         temp_path = fs.path(temp_name)
 
-        # Bazaga yozamiz
         db_file = UploadedFile.objects.create(
             original_name=uploaded_file.name,
-            file=f'uploads/temp_{uploaded_file.name}'  # keyinchalik yangilanadi
+            file=f'uploads/temp_{uploaded_file.name}'
         )
 
-        # Yangi nom yaratamiz (uuid)
         new_filename = f"{db_file.uuid_name}.docx"
         new_path = os.path.join(settings.MEDIA_ROOT, 'uploads', new_filename)
         os.makedirs(os.path.dirname(new_path), exist_ok=True)
 
-        # Faylni nusxalab yangi nomda saqlaymiz
         with open(temp_path, 'rb') as src, open(new_path, 'wb') as dst:
             dst.write(src.read())
 
-        # To‘liq URL (domain kerak)
         domain = request.build_absolute_uri('/')[:-1]
-        file_url = f"{domain}{settings.MEDIA_URL}uploads/{new_filename}"
+        verify_url = f"{domain}/verify/{db_file.uuid_name}/"
 
-        # QR code yaratamiz (fayl URL bilan)
-        qr_img = qrcode.make(file_url)
+        # QR code yaratamiz (fayl emas, verify sahifasiga)
+        qr_img = qrcode.make(verify_url)
         buf = BytesIO()
         qr_img.save(buf, format='PNG')
         buf.seek(0)
 
-        # DOCX ochamiz va pastki o‘ng burchakka qo‘shamiz
+        # DOCX ga QR va kod yozamiz
         doc = Document(new_path)
-        paragraph = doc.add_paragraph()
-        run = paragraph.add_run()
+        p = doc.add_paragraph()
+        p.add_run(f"Kod: {db_file.code}\n")
+        run = p.add_run()
         run.add_picture(buf, width=Inches(1.3))
-        paragraph.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-
-        # Saqlaymiz
+        p.alignment = WD_ALIGN_PARAGRAPH.RIGHT
         doc.save(new_path)
 
-        # Bazada fayl yo‘lini yangilaymiz
         db_file.file.name = f"uploads/{new_filename}"
         db_file.save()
 
-        # Vaqtincha faylni o‘chirib tashlaymiz
-        try:
-            os.remove(temp_path)
-        except FileNotFoundError:
-            pass
+        os.remove(temp_path)
 
         return render(request, 'result.html', {
             'file_url': f"{settings.MEDIA_URL}uploads/{new_filename}",
             'uuid': db_file.uuid_name,
-            'link': file_url
+            'code': db_file.code,
+            'verify_url': verify_url
         })
 
     return render(request, 'upload.html')
+
+
+
+from django.shortcuts import get_object_or_404, render
+from django.http import FileResponse
+
+def verify_file(request, uuid):
+    file_obj = get_object_or_404(UploadedFile, uuid_name=uuid)
+
+    if request.method == 'POST':
+        code = request.POST.get('code')
+        if code == file_obj.code:
+            file_path = file_obj.file.path
+            return FileResponse(open(file_path, 'rb'), as_attachment=True, filename=file_obj.original_name)
+        else:
+            return render(request, 'verify.html', {
+                'error': 'Kod noto‘g‘ri!',
+                'uuid': uuid
+            })
+
+    return render(request, 'verify.html', {'uuid': uuid})
