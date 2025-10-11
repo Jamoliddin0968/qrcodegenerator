@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>Faylni tasdiqlash</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; margin-top: 100px; }
+        input { padding: 10px; font-size: 18px; width: 100px; text-align: center; }
+        button { padding: 10px 20px; font-size: 16px; margin-left: 10px; }
+        .error { color: red; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h2>Faylni yuklash uchun 4 xonali kodni kiriting</h2>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="code" maxlength="4" pattern="\d{4}" required>
+        <button type="submit">Tekshirish</button>
+    </form>
+    {% if error %}
+      <div class="error">{{ error }}</div>
+    {% endif %}
+</body>
+</html>

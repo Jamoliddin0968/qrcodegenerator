@@ -5,8 +5,9 @@ from django.conf import settings
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 from docx import Document
-from docx.shared import Inches
+from docx.shared import Inches,Pt
 from docx.enum.text import WD_ALIGN_PARAGRAPH
+from docx.enum.table import WD_TABLE_ALIGNMENT
 from .models import UploadedFile
 
 
@@ -40,11 +41,28 @@ def upload_docx(request):
 
         # DOCX ga QR va kod yozamiz
         doc = Document(new_path)
-        p = doc.add_paragraph()
-        run = p.add_run(f"{db_file.code}\n")
-        # run = p.add_run()
-        run.add_picture(buf, width=Inches(1.3))
-        p.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+        table = doc.add_table(rows=1, cols=2)
+        table.autofit = False
+
+        # chap ustunda kod
+        cell_code = table.rows[0].cells[0]
+        p_code = cell_code.paragraphs[0]
+        run_code = p_code.add_run(f"Kod: {db_file.code}")
+        run_code.bold = True
+        run_code.font.size = Pt(20)  # shrift kattaligi
+        p_code.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        cell_code.width = Inches(2)
+
+        # o'ng ustunda QR rasm
+        cell_qr = table.rows[0].cells[1]
+        p_qr = cell_qr.paragraphs[0]
+        run_qr = p_qr.add_run()
+        run_qr.add_picture(buf, width=Inches(1.3))
+        p_qr.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+        cell_qr.width = Inches(3)
+
+        # Jadvalni o'ng tomonga suramiz
+        table.alignment = WD_TABLE_ALIGNMENT.RIGHT
         doc.save(new_path)
 
         db_file.file.name = f"uploads/{new_filename}"
