@@ -41,8 +41,8 @@ def upload_docx(request):
         # DOCX ga QR va kod yozamiz
         doc = Document(new_path)
         p = doc.add_paragraph()
-        p.add_run(f"Kod: {db_file.code}\n")
-        run = p.add_run()
+        run = p.add_run(f"Kod: {db_file.code}\n")
+        # run = p.add_run()
         run.add_picture(buf, width=Inches(1.3))
         p.alignment = WD_ALIGN_PARAGRAPH.RIGHT
         doc.save(new_path)
