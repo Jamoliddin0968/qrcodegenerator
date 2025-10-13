@@ -91,7 +91,7 @@ def verify_file(request, uuid):
             file_path = file_obj.file.path
             return FileResponse(open(file_path, 'rb'), as_attachment=True, filename=file_obj.original_name)
         else:
-            return render(request, 'verify.html', {
+            return render(request, 'index.html', {
                 'error': 'Kod noto‘g‘ri!',
                 'uuid': uuid
             })
