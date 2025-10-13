@@ -77,9 +77,9 @@
               ❌ Kod noto‘g‘ri. Qayta urinib ko‘ring.
             </p>
             {% endif %}
-            <form class="gov__form" action="" method="post">
+            <form class="gov__form"  method="post">
               {% csrf_token %}<label class="gov__label" for="code">ПИН код</label><input class="gov__inp"
-                type="text" maxlength="4" id="code" autofocus=""><!----><button class="gov__btn">Очиш</button></form>
+                type="text" maxlength="4" id="code" name="code" autofocus=""><!----><button class="gov__btn">Очиш</button></form>
             
 
             <p class="gov__text">ПИН код хужжатнинг QR коди ёнига жойлаштирилган</p>

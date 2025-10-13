@@ -86,6 +86,7 @@ def verify_file(request, uuid):
     file_obj = get_object_or_404(UploadedFile, uuid_name=uuid)
 
     if request.method == 'POST':
+        # print(request.POST)
         code = request.POST.get('code')
         if code == file_obj.code:
             file_path = file_obj.file.path
