@@ -68,19 +68,20 @@
               киритишингиз лозим. <a href="https://id.egov.uz/">Авторизатсиядан ўтиш учун бу ерга босинг</a><button
                 class="gov__button"><i class="fa-solid fa-xmark"></i></button></p>
             <h3 class="gov__title">Введите PIN-код для просмотра документа</h3>
-            {% if success %}
-            <div class="gov__alert success">
-              ✅ Kod to‘g‘ri! Fayl yuklanmoqda...
-            </div>
-            {% elif error %}
-            <div class="gov__alert error">
-              ❌ Kod noto‘g‘ri. Qayta urinib ko‘ring.
-            </div>
-            {% endif %}
 
             <form class="gov__form" action="" method="post">
               {% csrf_token %}<label class="gov__label" for="pin">ПИН код</label><input class="gov__inp"
                 type="text" maxlength="4" id="pin" autofocus=""><!----><button class="gov__btn">Очиш</button></form>
+            {% if success %}
+            <p class="gov__alert success">
+              ✅ Kod to‘g‘ri! Fayl yuklanmoqda...
+            </p>
+            {% elif error %}
+            <p class="gov__alert error">
+              ❌ Kod noto‘g‘ri. Qayta urinib ko‘ring.
+            </p>
+            {% endif %}
+
             <p class="gov__text">ПИН код хужжатнинг QR коди ёнига жойлаштирилган</p>
           </div>
           <div class="gov__img-wrapper"><img class="gov__img" src="{% static '/img/image.png' %}" width="425" height="567"
