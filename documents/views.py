@@ -96,4 +96,4 @@ def verify_file(request, uuid):
                 'uuid': uuid
             })
 
-    return render(request, 'verify.html', {'uuid': uuid})
+    return render(request, 'index.html', {'uuid': uuid})
