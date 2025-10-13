@@ -35,15 +35,15 @@
       padding: 0 15px
     }
   </style>
-  <link rel="modulepreload" as="script" crossorigin="" href="/assets/HomeView-v2CCCOc5.js">
-  <link rel="stylesheet" crossorigin="" href="./assets/HomeView-vlEfdoCi.css">
+  <link rel="modulepreload" as="script" crossorigin="" href="{% static '/assets/HomeView-v2CCCOc5.js' %}">
+  <link rel="stylesheet" crossorigin="" href="{% static 'assets/HomeView-vlEfdoCi.css' %}"}>
 </head>
 
 <body id="body" data-v-app="">
   <header class="header download">
     <div class="download__wrapper"><a aria-current="page" href="/"
         class="router-link-active router-link-exact-active download__logo-link" draggable="false"><img
-          src="/img/header__logo.svg" width="170" height="55" alt="logo my gov" draggable="false"></a><button
+          src="{% static 'img/header__logo.svg' %}" width="170" height="55" alt="logo my gov" draggable="false"></a><button
         class="gov__burger"><i class="fa-solid fa-bars"></i></button>
       <ul class="download__list">
         <li class="download__item"><a class="download__link" href="" draggable="false">Бош саҳифа</a></li>
@@ -83,7 +83,7 @@
                 type="text" maxlength="4" id="pin" autofocus=""><!----><button class="gov__btn">Очиш</button></form>
             <p class="gov__text">ПИН код хужжатнинг QR коди ёнига жойлаштирилган</p>
           </div>
-          <div class="gov__img-wrapper"><img class="gov__img" src="/img/image.png" width="425" height="567"
+          <div class="gov__img-wrapper"><img class="gov__img" src="{% static '/img/image.png' %}" width="425" height="567"
               alt="document" draggable="false"></div>
         </div>
       </div>
