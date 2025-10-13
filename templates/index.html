@@ -1,113 +1,71 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="uz">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Faylni tekshirish</title>
-
-  <!-- Iconlar va CSS -->
   <link rel="icon" href="{% static 'img/xlogo.png' %}">
   <link rel="stylesheet" href="{% static 'css/main.css' %}">
   <link rel="stylesheet" href="{% static 'css/my.css' %}">
-  <script src="https://kit.fontawesome.com/a2d3b9e31d.js" crossorigin="anonymous"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/img/xlogo.png.pagespeed.ic.JAPw9n7Eyx.webp">
+  <title>Единый портал интерактивных госдарственных услуг</title>
+  <!-- <script type="module" crossorigin="" src="/assets/index-05jFSy8a.js"></script> -->
+  <style crossorigin="">
+    @import"https://fonts.googleapis.com/css2?family=Open+Sans:wght@300..800&display=swap";
+    @import"https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Hind+Madurai:wght@400;600;700&family=Nanum+Brush+Script&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:wght@400;500;700&display=swap";
 
-  <style>
+    *,
+    *:before,
+    *:after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      text-decoration: none
+    }
+
     body {
-      font-family: "Open Sans", sans-serif;
-      background-color: #f8f9fa;
+      font-family: Open Sans, sans-serif
     }
 
-    .gov__container {
-      max-width: 1000px;
+    .container {
+      max-width: 1170px;
       margin: 0 auto;
-      padding: 30px;
-    }
-
-    .gov__wrapper {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .gov__box {
-      max-width: 480px;
-    }
-
-    .gov__inp {
-      width: 100%;
-      padding: 12px;
-      font-size: 1.5rem;
-      text-align: center;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      margin-bottom: 15px;
-    }
-
-    .gov__btn {
-      background-color: #198754;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      font-size: 1rem;
-      border-radius: 8px;
-      cursor: pointer;
-      width: 100%;
-    }
-
-    .gov__btn:hover {
-      background-color: #157347;
-    }
-
-    .gov__alert {
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 15px;
-      font-weight: 500;
-      text-align: center;
-    }
-
-    .gov__alert.success {
-      background-color: #d1e7dd;
-      color: #0f5132;
-    }
-
-    .gov__alert.error {
-      background-color: #f8d7da;
-      color: #842029;
+      padding: 0 15px
     }
   </style>
+  <link rel="modulepreload" as="script" crossorigin="" href="/assets/HomeView-v2CCCOc5.js">
+  <link rel="stylesheet" crossorigin="" href="./assets/HomeView-vlEfdoCi.css">
 </head>
 
-<body>
-
+<body id="body" data-v-app="">
   <header class="header download">
-    <div class="download__wrapper">
-      <a href="/" class="download__logo-link">
-        <img src="{% static 'img/header__logo.svg' %}" width="170" height="55" alt="logo my gov">
-      </a>
+    <div class="download__wrapper"><a aria-current="page" href="/"
+        class="router-link-active router-link-exact-active download__logo-link" draggable="false"><img
+          src="/img/header__logo.svg" width="170" height="55" alt="logo my gov" draggable="false"></a><button
+        class="gov__burger"><i class="fa-solid fa-bars"></i></button>
       <ul class="download__list">
-        <li class="download__item"><a class="download__link" href="#">Bosh sahifa</a></li>
-        <li class="download__item"><a class="download__link" href="#">Kirish</a></li>
+        <li class="download__item"><a class="download__link" href="" draggable="false">Бош саҳифа</a></li>
+        <li class="download__item">
+          <p class="download__language"><i class="download__icon fa-solid fa-caret-down"></i></p>
+          <ul class="download__item-list">
+            <li class="download__item-item">Ўзбекча</li>
+            <li class="download__item-item">O'zbekcha</li>
+            <li class="download__item-item">Русский</li>
+          </ul>
+        </li>
+        <li class="download__item"><a class="download__link" href="">Кириш</a></li>
       </ul>
     </div>
   </header>
-
   <main>
     <section class="gov">
       <div class="gov__container">
         <div class="gov__wrapper">
-
           <div class="gov__box">
-            <p class="gov__notification">
-              Ushbu hujjatni ko‘rish uchun siz PIN kodni kiritishingiz kerak.
-              <a href="https://id.egov.uz/">Avtorizatsiya uchun bu yerni bosing</a>
-            </p>
-
-            <h3 class="gov__title mb-3">Faylni ko‘rish uchun 4 xonali kodni kiriting</h3>
-
+            <p class="gov__notification">Ушбу ҳужжатдан фойдаланиш учун сиз авторизатсиядан ўтишингиз ёки, ПИН кодини
+              киритишингиз лозим. <a href="https://id.egov.uz/">Авторизатсиядан ўтиш учун бу ерга босинг</a><button
+                class="gov__button"><i class="fa-solid fa-xmark"></i></button></p>
+            <h3 class="gov__title">Введите PIN-код для просмотра документа</h3>
             {% if success %}
             <div class="gov__alert success">
               ✅ Kod to‘g‘ri! Fayl yuklanmoqda...
@@ -118,30 +76,22 @@
             </div>
             {% endif %}
 
-            <form method="post">
-              {% csrf_token %}
-              <label class="gov__label" for="pin">PIN kod</label>
-              <input class="gov__inp" type="text" name="code" id="pin" maxlength="4" pattern="\d{4}" required>
-              <button type="submit" class="gov__btn">Tekshirish</button>
-            </form>
-
-            <p class="gov__text mt-3">PIN kod hujjatning QR kod yonida joylashgan.</p>
+            <form class="gov__form" action="" method="post">
+              {% csrf_token %}<label class="gov__label" for="pin">ПИН код</label><input class="gov__inp"
+                type="text" maxlength="4" id="pin" autofocus=""><!----><button class="gov__btn">Очиш</button></form>
+            <p class="gov__text">ПИН код хужжатнинг QR коди ёнига жойлаштирилган</p>
           </div>
-
-          <div class="gov__img-wrapper">
-            <img class="gov__img" src="{% static 'img/image.png' %}" width="425" height="567" alt="document">
-          </div>
-
+          <div class="gov__img-wrapper"><img class="gov__img" src="/img/image.png" width="425" height="567"
+              alt="document" draggable="false"></div>
         </div>
       </div>
     </section>
   </main>
-
   <footer class="gov__footer">
-    <div class="gov__footer-wrapper text-center py-3">
-      <p class="gov__footer-text">© <a href="https://uzinfocom.uz/">UZINFOCOM</a> 2025</p>
+    <div class="gov__footer-wrapper">
+      <p class="gov__footer-text"> ©<a href="https://uzinfocom.uz/">UZINFOCOM</a>2025 </p>
     </div>
   </footer>
-
 </body>
+
 </html>
