@@ -48,7 +48,7 @@ def upload_docx(request):
         # Kod (chapda)
         cell_code = table.rows[0].cells[0]
         p_code = cell_code.paragraphs[0]
-        run_code = p_code.add_run(f"\n\n{db_file.code}")
+        run_code = p_code.add_run(f"\n{db_file.code}")
         run_code.bold = True
         run_code.font.size = Pt(32)  # kattaroq shrift
         p_code.alignment = WD_ALIGN_PARAGRAPH.CENTER
