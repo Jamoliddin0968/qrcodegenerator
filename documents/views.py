@@ -41,12 +41,12 @@ def upload_docx(request):
 
         # DOCX ga QR va kod yozamiz
         doc = Document(new_path)
-        table = doc.add_table(rows=1, cols=2)
-        table.autofit = False
+        table = doc.add_table(rows=1, cols=4)
+        # table.autofit = False
         table.alignment = WD_TABLE_ALIGNMENT.RIGHT
 
         # Kod (chapda)
-        cell_code = table.rows[0].cells[0]
+        cell_code = table.rows[0].cells[2]
         p_code = cell_code.paragraphs[0]
         run_code = p_code.add_run(f"\n{db_file.code}")
         run_code.bold = True
@@ -55,7 +55,7 @@ def upload_docx(request):
         cell_code.width = Inches(2)
 
         # QR (o‘ngda)
-        cell_qr = table.rows[0].cells[1]
+        cell_qr = table.rows[0].cells[3]
         p_qr = cell_qr.paragraphs[0]
         run_qr = p_qr.add_run()
         run_qr.add_picture(buf, width=Inches(1.5))
