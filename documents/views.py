@@ -112,3 +112,101 @@ def verify_file(request, uuid):
             })
 
     return render(request, 'index.html', {'uuid': uuid})
+
+import uuid
+import qrcode
+from io import BytesIO
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+from weasyprint import HTML
+from django.conf import settings
+from .models import UploadedFile
+import os
+from datetime import datetime
+
+
+import uuid
+import qrcode
+import base64
+import random
+from io import BytesIO
+from datetime import datetime
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+from weasyprint import HTML
+from django.conf import settings
+from .models import UploadedFile
+import os
+
+def create_pdf_view(request):
+    if request.method == "POST":
+        full_name = request.POST.get("full_name")
+        pinfl = request.POST.get("pinfl")
+
+        # собираем строки таблицы
+        months = request.POST.getlist("month[]")
+        companies = request.POST.getlist("company[]")
+        salaries = request.POST.getlist("salary[]")
+        taxes = request.POST.getlist("tax[]")
+
+        incomes = []
+        for i in range(len(months)):
+            if (months[i] or companies[i] or salaries[i] or taxes[i]):
+                incomes.append({
+                    "month": (months[i] or "").strip(),
+                    "company": (companies[i] or "").strip(),
+                    "salary": (salaries[i] or "").strip(),
+                    "tax": (taxes[i] or "").strip(),
+                })
+
+        # создаём запись (пока без файла)
+        db_file = UploadedFile.objects.create(
+            original_name=f"{full_name}.pdf",
+            file="",
+        )
+
+        # генерим 4-значный код и сохраняем в модель
+        code4 = f"{random.randint(0, 9999):04d}"
+        try:
+            db_file.code = code4
+            db_file.save(update_fields=["code"])
+        except Exception:
+            # если поле code автогенерится моделью — ок, используем то, что есть
+            code4 = db_file.code
+
+        # verify url для QR
+        domain = request.build_absolute_uri('/')[:-1]
+        verify_url = f"{domain}/verify/{db_file.uuid_name}/"
+
+        # QR base64
+        qr_img = qrcode.make(verify_url)
+        buf = BytesIO()
+        qr_img.save(buf, format='PNG')
+        buf.seek(0)
+        qr_base64 = base64.b64encode(buf.getvalue()).decode('utf-8')
+        qr_data = f"data:image/png;base64,{qr_base64}"
+
+        # HTML → PDF
+        html_string = render_to_string("pdf_template.html", {
+            "full_name": full_name,
+            "pinfl": pinfl,
+            "date": datetime.now().strftime("%Y-%m-%d"),
+            "doc_number": str(uuid.uuid4())[:8],
+            "incomes": incomes,
+            "verify_url": verify_url,
+            "code": code4,        # строго 4 цифры в шаблоне
+            "qr_data": qr_data,   # <img src="{{ qr_data }}">
+        })
+
+        pdf_path = os.path.join(settings.MEDIA_ROOT, "uploads", f"{db_file.uuid_name}.pdf")
+        os.makedirs(os.path.dirname(pdf_path), exist_ok=True)
+        HTML(string=html_string, base_url=request.build_absolute_uri()).write_pdf(pdf_path)
+
+        db_file.file.name = f"uploads/{db_file.uuid_name}.pdf"
+        db_file.save(update_fields=["file"])
+
+        return HttpResponse(
+            f"<h3>PDF готов:</h3><a href='{settings.MEDIA_URL}uploads/{db_file.uuid_name}.pdf'>Скачать</a>"
+        )
+
+    return render(request, "pdf_form.html")
