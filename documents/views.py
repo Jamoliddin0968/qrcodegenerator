@@ -62,7 +62,7 @@ def upload_docx(request):
         run_code = p_code.add_run(f"{db_file.code}")
         run_code.bold = False
         run_code.font.size = Pt(23)
-        run_code.font.name = 'Times New Roman'
+        run_code.font.name = 'Cambria'
         # kattaroq shrift
         p_code.alignment = WD_ALIGN_PARAGRAPH.CENTER
         cell_code.width = Inches(0.98)
