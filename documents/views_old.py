@@ -6,10 +6,8 @@ from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 from docx import Document
 from docx.shared import Inches,Pt
-from docx.oxml import OxmlElement
-from docx.oxml.ns import qn
 from docx.enum.text import WD_ALIGN_PARAGRAPH
-from docx.enum.table import WD_TABLE_ALIGNMENT, WD_CELL_VERTICAL_ALIGNMENT
+from docx.enum.table import WD_TABLE_ALIGNMENT
 from .models import UploadedFile
 
 
@@ -35,52 +33,34 @@ def upload_docx(request):
         domain = request.build_absolute_uri('/')[:-1]
         verify_url = f"{domain}/verify/{db_file.uuid_name}/"
 
-        qr = qrcode.QRCode(box_size=12, border=2)
-        qr.add_data(verify_url)
-        qr.make(fit=True)
+        # QR code yaratamiz (fayl emas, verify sahifasiga)
+        qr_img = qrcode.make(verify_url)
         buf = BytesIO()
-        img = qr.make_image(fill_color="black", back_color="white").convert("RGB")
-        img.save(buf, format='PNG', dpi=(300,300))
-        # # QR code yaratamiz (fayl emas, verify sahifasiga)
-        # qr_img = qrcode.make(verify_url)
-        # O()
-        # qr_img.save(buf, format='PNG')
+        qr_img.save(buf, format='PNG')
         buf.seek(0)
 
         # DOCX ga QR va kod yozamiz
         doc = Document(new_path)
-        table = doc.add_table(rows=1, cols=3)
+        table = doc.add_table(rows=1, cols=4)
         # table.autofit = False
-        table.alignment = WD_TABLE_ALIGNMENT.LEFT
+        table.alignment = WD_TABLE_ALIGNMENT.RIGHT
 
-        text_cell = table.rows[0].cells[0]
-        text_cell.vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.CENTER
-        p_text = text_cell.paragraphs[0]
-        p_text.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-        run_text = p_text.add_run("This document is a copy of an electronic document generated in accordance with the provision on the Single Portal of Interactive Public Services, approved by the provision of the Cabinet of Ministers of the Republic of Uzbekistan dated September 15, 2017 No. 728. To check the accuracy of the information specified in the copy of the electronic document, go to the website repo.gov.uz and enter the unique number of the electronic document, or scan the QR code using a mobile device. Attention! In accordance with the provision of the Cabinet of Ministers of the Republic of Uzbekistan dated September 15, 2017 No. 728, the information contained in electronic documents is legitimate. It is strictly forbidden for state bodies to refuse to accept copies of electronic documents generated on the Single Portal of Interactive Public Services.")
-        run_text.font.size = Pt(10)
-        run_text.font.name = 'Times New Roman'
-        text_cell.width = Inches(5.09)
         # Kod (chapda)
-        cell_code = table.rows[0].cells[1]
-        cell_code.vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.CENTER
+        cell_code = table.rows[0].cells[2]
         p_code = cell_code.paragraphs[0]
-        run_code = p_code.add_run(f"{db_file.code}")
-        run_code.bold = False
-        run_code.font.size = Pt(23)
-        run_code.font.name = 'Times New Roman'
-        # kattaroq shrift
+        run_code = p_code.add_run(f"\n{db_file.code}")
+        run_code.bold = True
+        run_code.font.size = Pt(32)  # kattaroq shrift
         p_code.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        cell_code.width = Inches(0.98)
+        cell_code.width = Inches(2)
 
         # QR (o‘ngda)
-        cell_qr = table.rows[0].cells[2]
-        cell_qr.vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.CENTER
+        cell_qr = table.rows[0].cells[3]
         p_qr = cell_qr.paragraphs[0]
         run_qr = p_qr.add_run()
-        run_qr.add_picture(buf, width=Inches(1.22))
+        run_qr.add_picture(buf, width=Inches(1.5))
         p_qr.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-        cell_qr.width = Inches(1.22)
+        cell_qr.width = Inches(3)
         doc.save(new_path)
 
         db_file.file.name = f"uploads/{new_filename}"
