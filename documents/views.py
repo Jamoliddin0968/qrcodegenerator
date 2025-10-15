@@ -33,10 +33,16 @@ def upload_docx(request):
         domain = request.build_absolute_uri('/')[:-1]
         verify_url = f"{domain}/verify/{db_file.uuid_name}/"
 
-        # QR code yaratamiz (fayl emas, verify sahifasiga)
-        qr_img = qrcode.make(verify_url)
+        qr = qrcode.QRCode(box_size=12, border=2)
+        qr.add_data(verify_url)
+        qr.make(fit=True)
         buf = BytesIO()
-        qr_img.save(buf, format='PNG')
+        img = qr.make_image(fill_color="black", back_color="white").convert("RGB")
+        img.save(buf, format='PNG', dpi=(300,300))
+        # # QR code yaratamiz (fayl emas, verify sahifasiga)
+        # qr_img = qrcode.make(verify_url)
+        # O()
+        # qr_img.save(buf, format='PNG')
         buf.seek(0)
 
         # DOCX ga QR va kod yozamiz
