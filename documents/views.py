@@ -179,16 +179,16 @@ def create_pdf_view(request):
         buf.seek(0)
         qr_base64 = base64.b64encode(buf.getvalue()).decode('utf-8')
         qr_data = f"data:image/png;base64,{qr_base64}"
-        return render(request,"pdf_template.html", {
-            "full_name": full_name,
-            "pinfl": pinfl,
-            "date": datetime.now().strftime("%Y-%m-%d"),
-            "doc_number": str(uuid.uuid4())[:8],
-            "incomes": incomes,
-            "verify_url": verify_url,
-            "code": code4,        # строго 4 цифры в шаблоне
-            "qr_data": qr_data,   # <img src="{{ qr_data }}">
-        })
+        # return render(request,"pdf_template.html", {
+        #     "full_name": full_name,
+        #     "pinfl": pinfl,
+        #     "date": datetime.now().strftime("%Y-%m-%d"),
+        #     "doc_number": str(uuid.uuid4())[:8],
+        #     "incomes": incomes,
+        #     "verify_url": verify_url,
+        #     "code": code4,        # строго 4 цифры в шаблоне
+        #     "qr_data": qr_data,   # <img src="{{ qr_data }}">
+        # })
         # HTML → PDF
         html_string = render_to_string("pdf_template.html", {
             "full_name": full_name,
