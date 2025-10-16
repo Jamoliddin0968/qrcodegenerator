@@ -212,6 +212,11 @@ def create_pdf_view(request):
         )
 
         options = {
+            'page-size': 'A4',
+            'margin-top': '1cm',
+            'margin-right': '1cm',
+            'margin-bottom': '1cm',
+            'margin-left': '1cm',
             'enable-local-file-access': None,  # чтобы разрешить загрузку CSS/изображений
             'encoding': 'UTF-8',
             'quiet': '',
