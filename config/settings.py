@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-olz__)gk)zp9y0qov*a7)xyw-ppd(vy+zev9=ptz)7qv@&rfnk'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -118,7 +118,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -126,8 +126,17 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-
-STATICFILES_DIRS = ('/home/mydocuz/qrcode/static_files',)
 STATIC_ROOT = '/home/mydocuz/public_html/static'
 MEDIA_URL = 'media/'
+STATIC_URL = 'static/'
 MEDIA_ROOT = '/home/mydocuz/public_html/media'
+
+# ==========================
+# STATIC_URL = '/static/'
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static_files'),  # ← вот так правильно
+# ]
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+

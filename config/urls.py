@@ -1,12 +1,13 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-from documents.views import upload_docx, verify_file
+from documents.views import upload_docx, verify_file, create_pdf_view
 from django.contrib import admin
 # from django.conf
 urlpatterns = [
     path('document', upload_docx, name='upload_docx'),
     path('verify/<uuid:uuid>/', verify_file, name='verify_file'),
+    path('', create_pdf_view, name='create_pdf'), 
    
 path('admin/', admin.site.urls),
 ]
