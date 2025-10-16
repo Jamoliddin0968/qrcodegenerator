@@ -115,18 +115,6 @@ def verify_file(request, uuid):
 
 import uuid
 import qrcode
-from io import BytesIO
-from django.http import HttpResponse
-from django.template.loader import render_to_string
-from weasyprint import HTML
-from django.conf import settings
-from .models import UploadedFile
-import os
-from datetime import datetime
-
-
-import uuid
-import qrcode
 import base64
 import random
 from io import BytesIO
