@@ -195,7 +195,7 @@ def create_pdf_view(request):
             "full_name": full_name,
             "pinfl": pinfl,
             "date": datetime.now().strftime("%Y-%m-%d"),
-            "doc_number": str(uuid.uuid4())[:8],
+            "doc_number": '-'.join([uuid.uuid4().hex[i:i+4] for i in range(0, 28, 4)]),
             "incomes": incomes,
             "verify_url": verify_url,
             "code": code4,

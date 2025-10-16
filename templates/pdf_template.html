@@ -198,33 +198,35 @@
 <div class="footer-wrap" style="margin-top: 25px; page-break-inside: avoid;">
   <table class="footer-table" style="width:100%; border-collapse:collapse; table-layout:fixed;">
     <tr>
-      <!-- ЛЕВАЯ ЧАСТЬ: текст во всю высоту, выровнен по ширине -->
+      <!-- ЛЕВАЯ ЧАСТЬ: текст -->
       <td style="
-          width:68%;
+          width:75%;
           vertical-align:top;
-          padding-right:10px;
-          font-size:9pt;
+          padding-right:15px;
+          font-size:8.5pt;
           text-align:justify;
-          line-height:1.15;
+          line-height:1.2;
       ">
         This document is a copy of an electronic document generated in accordance with the provision on the Single Portal of Interactive Public Services approved by the provision of the Cabinet of Ministers of the Republic of Uzbekistan dated September 15, 2017 No. 728.
         To check the accuracy of the information specified in the copy of the electronic document, go to the website
         repo.gov.uz and enter the unique number of the electronic document, or scan the QR code using a mobile device.
-        Attention! In accordance with the provision of the Cabinet of Ministers of the Republic of Uzbekistan dated September 15, 2017 No. 728, the information contained in electronic documents is legitimate.
+        <b>Attention!</b> In accordance with the provision of the Cabinet of Ministers of the Republic of Uzbekistan dated September 15, 2017 No. 728, the information contained in electronic documents is legitimate.
         It is strictly forbidden for state bodies to refuse to accept copies of electronic documents generated on the Single Portal of Interactive Public Services.
       </td>
 
-      <!-- СРЕДИНА: крупный код -->
+      <!-- СРЕДИНА: код -->
       <td style="
-          width:12%;
+          width:10%;
           text-align:center;
           vertical-align:middle;
+          padding:0 8px;
       ">
         <div style="
-            font-family:Cambria, serif;
-            font-size:18pt;
+            font-family:'Courier New', monospace;
+            font-size:16pt;
             font-weight:bold;
-            letter-spacing:2px;
+            letter-spacing:1px;
+            white-space:nowrap;
         ">
           {{ code }}
         </div>
@@ -232,13 +234,13 @@
 
       <!-- ПРАВО: QR-код -->
       <td style="
-          width:20%;
-          text-align:right;
+          width:15%;
+          text-align:center;
           vertical-align:middle;
       ">
         <img src="{{ qr_data }}" alt="QR" style="
-            width:1.22in;
-            height:1.22in;
+            width:0.95in;
+            height:0.95in;
             object-fit:contain;
         ">
       </td>
