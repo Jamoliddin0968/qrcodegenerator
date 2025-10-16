@@ -7,7 +7,7 @@ from django.contrib import admin
 urlpatterns = [
     path('verify/<uuid:uuid>/', verify_file, name='verify_file'),
     path('income-statement', create_pdf_view, name='create_pdf'), 
-    path('create-work-experience/', create_work_experience_pdf_view, name='create_work_experience'),
+    path('create-work-experience', create_work_experience_pdf_view, name='create_work_experience'),
    
 path('admin/', admin.site.urls),
 ]
