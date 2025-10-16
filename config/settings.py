@@ -126,16 +126,17 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# STATIC_ROOT = '/home/mydocuz/public_html/static'
-# MEDIA_URL = 'media/'
-
+STATIC_ROOT = '/home/mydocuz/public_html/static'
+MEDIA_URL = 'media/'
+STATIC_URL = 'static/'
 MEDIA_ROOT = '/home/mydocuz/public_html/media'
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static_files'),  # ← вот так правильно
-]
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# ==========================
+# STATIC_URL = '/static/'
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static_files'),  # ← вот так правильно
+# ]
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
