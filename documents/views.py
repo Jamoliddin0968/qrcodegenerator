@@ -132,12 +132,25 @@ from django.conf import settings
 from .models import UploadedFile
 import os
 
+import os
+import pdfkit
+import qrcode
+import base64
+import uuid
+import random
+from io import BytesIO
+from datetime import datetime
+from django.http import HttpResponse
+from django.conf import settings
+from django.template.loader import render_to_string
+from .models import UploadedFile
+
+
 def create_pdf_view(request):
     if request.method == "POST":
         full_name = request.POST.get("full_name")
         pinfl = request.POST.get("pinfl")
 
-        # собираем строки таблицы
         months = request.POST.getlist("month[]")
         companies = request.POST.getlist("company[]")
         salaries = request.POST.getlist("salary[]")
@@ -153,43 +166,31 @@ def create_pdf_view(request):
                     "tax": (taxes[i] or "").strip(),
                 })
 
-        # создаём запись (пока без файла)
+        # создаём запись
         db_file = UploadedFile.objects.create(
             original_name=f"{full_name}.pdf",
             file="",
         )
 
-        # генерим 4-значный код и сохраняем в модель
+        # генерим 4-значный код
         code4 = f"{random.randint(0, 9999):04d}"
         try:
             db_file.code = code4
             db_file.save(update_fields=["code"])
         except Exception:
-            # если поле code автогенерится моделью — ок, используем то, что есть
             code4 = db_file.code
 
-        # verify url для QR
+        # verify URL + QR
         domain = request.build_absolute_uri('/')[:-1]
         verify_url = f"{domain}/verify/{db_file.uuid_name}/"
 
-        # QR base64
         qr_img = qrcode.make(verify_url)
         buf = BytesIO()
         qr_img.save(buf, format='PNG')
-        buf.seek(0)
         qr_base64 = base64.b64encode(buf.getvalue()).decode('utf-8')
         qr_data = f"data:image/png;base64,{qr_base64}"
-        # return render(request,"pdf_template.html", {
-        #     "full_name": full_name,
-        #     "pinfl": pinfl,
-        #     "date": datetime.now().strftime("%Y-%m-%d"),
-        #     "doc_number": str(uuid.uuid4())[:8],
-        #     "incomes": incomes,
-        #     "verify_url": verify_url,
-        #     "code": code4,        # строго 4 цифры в шаблоне
-        #     "qr_data": qr_data,   # <img src="{{ qr_data }}">
-        # })
-        # HTML → PDF
+
+        # рендерим HTML
         html_string = render_to_string("pdf_template.html", {
             "full_name": full_name,
             "pinfl": pinfl,
@@ -197,13 +198,31 @@ def create_pdf_view(request):
             "doc_number": str(uuid.uuid4())[:8],
             "incomes": incomes,
             "verify_url": verify_url,
-            "code": code4,        # строго 4 цифры в шаблоне
-            "qr_data": qr_data,   # <img src="{{ qr_data }}">
+            "code": code4,
+            "qr_data": qr_data,
         })
 
+        # путь для сохранения PDF
         pdf_path = os.path.join(settings.MEDIA_ROOT, "uploads", f"{db_file.uuid_name}.pdf")
         os.makedirs(os.path.dirname(pdf_path), exist_ok=True)
-        HTML(string=html_string, base_url=request.build_absolute_uri()).write_pdf(pdf_path)
+
+        # === wkhtmltopdf через pdfkit ===
+        config = pdfkit.configuration(
+            wkhtmltopdf="/usr/bin/wkhtmltopdf"  # путь к бинарнику wkhtmltopdf
+        )
+
+        options = {
+            'enable-local-file-access': None,  # чтобы разрешить загрузку CSS/изображений
+            'encoding': 'UTF-8',
+            'quiet': '',
+        }
+
+        pdfkit.from_string(
+            html_string,
+            pdf_path,
+            configuration=config,
+            options=options
+        )
 
         db_file.file.name = f"uploads/{db_file.uuid_name}.pdf"
         db_file.save(update_fields=["file"])
