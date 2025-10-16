@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Work Experience Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        button {
+            background-color: #0072bc;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+        }
+        button:hover {
+            background-color: #005a94;
+        }
+        .header-fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .header-fields input {
+            width: 100%;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #0072bc;
+            color: white;
+        }
+        .add-btn {
+            background-color: #28a745;
+        }
+        .add-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <h2>Create Work Experience Document</h2>
+    <form method="POST">
+        {% csrf_token %}
+        
+        <div class="header-fields">
+            <input type="text" name="full_name" placeholder="Full Name" required>
+            <input type="text" name="pinfl" placeholder="PINFL" required>
+            <input type="text" name="application_number" placeholder="Application Number" required>
+        </div>
+
+        <h3>Work Experience Records</h3>
+        <table id="workTable">
+            <thead>
+                <tr>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Organization</th>
+                    <th>TIN</th>
+                    <th>Position</th>
+                    <th>Department</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" name="start_date[]" placeholder="DD.MM.YYYY"></td>
+                    <td><input type="text" name="end_date[]" placeholder="Present or DD.MM.YYYY"></td>
+                    <td><input type="text" name="organization[]"></td>
+                    <td><input type="text" name="tin[]"></td>
+                    <td><input type="text" name="position[]"></td>
+                    <td><input type="text" name="department[]" placeholder="Does not exist"></td>
+                    <td><button type="button" onclick="removeRow(this)" style="background-color: #dc3545;">Remove</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button type="button" class="add-btn" onclick="addRow()">+ Add Row</button>
+        <br><br>
+        <button type="submit">Generate PDF</button>
+    </form>
+
+    <script>
+        function addRow() {
+            const table = document.getElementById('workTable').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+            newRow.innerHTML = `
+                <td><input type="text" name="start_date[]" placeholder="DD.MM.YYYY"></td>
+                <td><input type="text" name="end_date[]" placeholder="Present or DD.MM.YYYY"></td>
+                <td><input type="text" name="organization[]"></td>
+                <td><input type="text" name="tin[]"></td>
+                <td><input type="text" name="position[]"></td>
+                <td><input type="text" name="department[]" placeholder="Does not exist"></td>
+                <td><button type="button" onclick="removeRow(this)" style="background-color: #dc3545;">Remove</button></td>
+            `;
+        }
+
+        function removeRow(btn) {
+            const row = btn.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+    </script>
+</body>
+</html>
