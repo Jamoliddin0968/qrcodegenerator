@@ -1,5 +1,18 @@
+import os
+import pdfkit
+import qrcode
+import base64
+import uuid
+import random
+from io import BytesIO
+from datetime import datetime
+from django.http import HttpResponse
+from django.conf import settings
+from django.template.loader import render_to_string
+from .models import UploadedFile
 from django.shortcuts import get_object_or_404, render
 from django.http import FileResponse
+
 
 def verify_file(request, uuid):
     file_obj = get_object_or_404(UploadedFile, uuid_name=uuid)
@@ -17,33 +30,6 @@ def verify_file(request, uuid):
             })
 
     return render(request, 'index.html', {'uuid': uuid})
-
-import uuid
-import qrcode
-import base64
-import random
-from io import BytesIO
-from datetime import datetime
-from django.http import HttpResponse
-from django.template.loader import render_to_string
-from weasyprint import HTML
-from django.conf import settings
-from .models import UploadedFile
-import os
-
-import os
-import pdfkit
-import qrcode
-import base64
-import uuid
-import random
-from io import BytesIO
-from datetime import datetime
-from django.http import HttpResponse
-from django.conf import settings
-from django.template.loader import render_to_string
-from .models import UploadedFile
-
 
 def create_pdf_view(request):
     if request.method == "POST":
@@ -136,21 +122,6 @@ def create_pdf_view(request):
         )
 
     return render(request, "pdf_form.html")
-
-import os
-import pdfkit
-import qrcode
-import base64
-import uuid
-import random
-from io import BytesIO
-from datetime import datetime
-from django.http import HttpResponse
-from django.conf import settings
-from django.template.loader import render_to_string
-from django.shortcuts import render
-from .models import UploadedFile
-
 
 def create_work_experience_pdf_view(request):
     """
