@@ -126,6 +126,7 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_ROOT = '/home/mydocuz/public_html/static'
+STATICFILES_DIRS = ('/home/mydocuz/qrcode/static_files',)
 MEDIA_URL = 'media/'
 STATIC_URL = 'static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
