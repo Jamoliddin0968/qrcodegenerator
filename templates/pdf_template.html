@@ -15,28 +15,14 @@
 
     body {
       font-family: "Times New Roman", serif;
-      font-size: 12pt;
+      font-size: 14pt;
+      /* было 12 */
       color: #000;
     }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 10px;
-    }
-
-    .logo-left img {
-      width: 130px;
-    }
-
-    .logo-right {
-      text-align: right;
-      font-size: 10pt;
-    }
-
     .meta {
-      font-size: 10pt;
+      font-size: 12pt;
+      /* было 10 */
       margin-top: 8px;
     }
 
@@ -44,7 +30,8 @@
       text-align: center;
       margin: 20px 0 10px 0;
       text-transform: uppercase;
-      font-size: 13pt;
+      font-size: 15pt;
+      /* было 13 */
     }
 
     table {
@@ -54,94 +41,71 @@
       page-break-inside: auto;
     }
 
-    thead {
-      display: table-header-group;
-    }
-
-    tbody {
-      display: table-row-group;
-    }
-
-    thead tr {
-      page-break-inside: avoid;
-    }
-
-    tbody tr {
-      page-break-inside: auto;
-    }
-
     td,
     th {
       border: 1px solid #444;
       padding: 5px;
       text-align: center;
-      font-size: 11pt;
+      font-size: 13pt;
+      /* было 11 */
     }
 
+    /* Логотип слева */
+    .logo-left-text {
+      font-family: Cambria, serif;
+      font-size: 13pt;
+      /* было 11 */
+      color: #0072bc;
+      margin-top: 3px;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    /* Текст справа */
+    .header-right {
+      font-family: Cambria, serif;
+      font-size: 13pt;
+      /* было 11 */
+      color: #444;
+      line-height: 1.2;
+    }
 
     /* Футер */
     .footer-wrap {
       margin-top: 25px;
-      font-size: 9pt;
+      font-size: 11pt;
+      /* было 9 */
       text-align: justify;
       page-break-inside: avoid;
       page-break-before: auto;
     }
 
-
-    .footer-table {
-      width: 100%;
-      border-collapse: collapse;
-      table-layout: fixed;
-    }
-
-    .footer-table td {
-      border: none;
-      vertical-align: middle;
-      padding: 0;
-    }
-
-    .ft-left {
-      width: 68%;
-      padding-right: 10px;
-    }
-
-    .ft-mid {
-      width: 12%;
-      text-align: center;
-    }
-
-    .ft-right {
-      width: 20%;
-      text-align: right;
-    }
-
-    .code-label {
-      font-size: 9pt;
-      display: block;
-      margin-bottom: 2px;
-    }
-
     .code-value {
       font-family: "Cambria", serif;
-      font-size: 18pt;
+      font-size: 20pt;
+      /* было 18 */
       font-weight: bold;
       letter-spacing: 2px;
     }
 
-    .qr-img {
-      width: 1.22in;
-      height: 1.22in;
-      object-fit: contain;
+    h2 {
+      text-align: center;
+      margin-top: 35px;
+      /* отступ сверху */
+      margin-bottom: 30px;
+      /* отступ снизу */
+      text-transform: uppercase;
+      font-size: 15pt;
     }
   </style>
+
 </head>
 
 <body>
   <header style="position: relative; height: 110px; margin-bottom: 15px;">
     <!-- Логотип my.gov.uz -->
     <div style="position: absolute; left: 0; top: 0;">
-      <img src="{% static 'img/1.png' %}" alt="my.gov.uz" style="height:35px;">
+      <img src="http://api.bildung.uz/static/img/1.png" alt="my.gov.uz" style="height:35px;">
       <div style="
     font-family: Cambria, serif;
     font-size: 11pt;
@@ -159,7 +123,7 @@
 
     <!-- Герб по центру -->
     <div style="position: absolute; left: 50%; top: 0; transform: translateX(-50%); text-align:center;">
-      <img src="{% static 'img/2.jpg' %}" alt="Emblem" style="height:90px;">
+      <img src="http://api.bildung.uz/static/img/2.jpg" alt="Emblem" style="height:90px;">
     </div>
 
     <!-- Текст министерства справа -->
