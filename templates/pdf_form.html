@@ -46,42 +46,41 @@
         </tr>
     </table>
 
-    <script>
-        function fillYears(select) {
-            const current = new Date().getFullYear();
-            const start = current - 10;
-
-            select.innerHTML = '<option value="">Год</option>';
-            for (let y = current; y >= start; y--) {
-                select.insertAdjacentHTML("beforeend",
-                    `<option value="${y}">${y}</option>`
-                );
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.year-select').forEach(fillYears);
-        });
-
-        function addRow() {
-            const table = document.getElementById('income-table');
-            const row = table.rows[1].cloneNode(true);
-
-            // очистить inputs
-            row.querySelectorAll('input').forEach(input => input.value = '');
-
-            // пересоздать выпадающий список года
-            const yearSelect = row.querySelector('.year-select');
-            fillYears(yearSelect);
-
-            // очистить месяц
-            row.querySelectorAll('select[name="month[]"]').forEach(sel => sel.value = '');
-
-            table.appendChild(row);
-        }
-    </script>
-
 
     <br>
     <button type="submit">Создать PDF</button>
 </form>
+<script>
+    function fillYears(select) {
+        const current = new Date().getFullYear();
+        const start = current - 10;
+
+        select.innerHTML = '<option value="">Год</option>';
+        for (let y = current; y >= start; y--) {
+            select.insertAdjacentHTML("beforeend",
+                `<option value="${y}">${y}</option>`
+            );
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.year-select').forEach(fillYears);
+    });
+
+    function addRow() {
+        const table = document.getElementById('income-table');
+        const row = table.rows[1].cloneNode(true);
+
+        // очистить inputs
+        row.querySelectorAll('input').forEach(input => input.value = '');
+
+        // пересоздать выпадающий список года
+        const yearSelect = row.querySelector('.year-select');
+        fillYears(yearSelect);
+
+        // очистить месяц
+        row.querySelectorAll('select[name="month[]"]').forEach(sel => sel.value = '');
+
+        table.appendChild(row);
+    }
+</script>
