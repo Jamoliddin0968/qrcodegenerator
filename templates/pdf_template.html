@@ -1,109 +1,148 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<style>
-  @page {
-    size: A4;
-    margin-top: 1cm;
-    margin-bottom: 1cm;
-    margin-left: 1cm;
-    margin-right: 1cm;
-  }
-  body {
-    font-family: "Times New Roman", serif;
-    font-size: 12pt;
-    color: #000;
-  }
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 10px;
-  }
-  .logo-left img {
-    width: 130px;
-  }
-  .logo-right {
-    text-align: right;
-    font-size: 10pt;
-  }
-  .meta {
-    font-size: 10pt;
-    margin-top: 8px;
-  }
-  h2 {
-    text-align: center;
-    margin: 20px 0 10px 0;
-    text-transform: uppercase;
-    font-size: 13pt;
-  }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-  }
-  th, td {
-    border: 1px solid #444;
-    padding: 5px;
-    text-align: center;
-    font-size: 10pt;
-  }
 
-  /* Футер */
-  .footer-wrap {
-    margin-top: 25px;
-    font-size: 9pt;
-    text-align: justify;
-    page-break-inside: avoid;
-  }
-  .footer-table {
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: fixed;
-  }
-  .footer-table td {
-    border: none;
-    vertical-align: middle;
-    padding: 0;
-  }
-  .ft-left {
-    width: 68%;
-    padding-right: 10px;
-  }
-  .ft-mid {
-    width: 12%;
-    text-align: center;
-  }
-  .ft-right {
-    width: 20%;
-    text-align: right;
-  }
-  .code-label {
-    font-size: 9pt;
-    display: block;
-    margin-bottom: 2px;
-  }
-  .code-value {
-    font-family: "Cambria", serif;
-    font-size: 18pt;
-    font-weight: bold;
-    letter-spacing: 2px;
-  }
-  .qr-img {
-    width: 1.22in;
-    height: 1.22in;
-    object-fit: contain;
-  }
-</style>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @page {
+      size: A4;
+      margin-top: 1cm;
+      margin-bottom: 1cm;
+      margin-left: 1cm;
+      margin-right: 1cm;
+    }
+
+    body {
+      font-family: "Times New Roman", serif;
+      font-size: 12pt;
+      color: #000;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .logo-left img {
+      width: 130px;
+    }
+
+    .logo-right {
+      text-align: right;
+      font-size: 10pt;
+    }
+
+    .meta {
+      font-size: 10pt;
+      margin-top: 8px;
+    }
+
+    h2 {
+      text-align: center;
+      margin: 20px 0 10px 0;
+      text-transform: uppercase;
+      font-size: 13pt;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      page-break-inside: auto;
+    }
+
+    thead {
+      display: table-header-group;
+    }
+
+    tbody {
+      display: table-row-group;
+    }
+
+    thead tr {
+      page-break-inside: avoid;
+    }
+
+    tbody tr {
+      page-break-inside: auto;
+    }
+
+    td,
+    th {
+      border: 1px solid #444;
+      padding: 5px;
+      text-align: center;
+      font-size: 11pt;
+    }
+
+
+    /* Футер */
+    .footer-wrap {
+      margin-top: 25px;
+      font-size: 9pt;
+      text-align: justify;
+      page-break-inside: avoid;
+      page-break-before: auto;
+    }
+
+
+    .footer-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    .footer-table td {
+      border: none;
+      vertical-align: middle;
+      padding: 0;
+    }
+
+    .ft-left {
+      width: 68%;
+      padding-right: 10px;
+    }
+
+    .ft-mid {
+      width: 12%;
+      text-align: center;
+    }
+
+    .ft-right {
+      width: 20%;
+      text-align: right;
+    }
+
+    .code-label {
+      font-size: 9pt;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .code-value {
+      font-family: "Cambria", serif;
+      font-size: 18pt;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    .qr-img {
+      width: 1.22in;
+      height: 1.22in;
+      object-fit: contain;
+    }
+  </style>
 </head>
+
 <body>
-<header style="position: relative; height: 110px; margin-bottom: 15px;">
-  <!-- Логотип my.gov.uz -->
-  <div style="position: absolute; left: 0; top: 0;">
-    <img src="http://api.bildung.uz/static/img/1.png" alt="my.gov.uz" style="height:35px;">
-    <div style="
+  <header style="position: relative; height: 110px; margin-bottom: 15px;">
+    <!-- Логотип my.gov.uz -->
+    <div style="position: absolute; left: 0; top: 0;">
+      <img src="{% static 'img/1.png' %}" alt="my.gov.uz" style="height:35px;">
+      <div style="
     font-family: Cambria, serif;
     font-size: 11pt;
     color: #0072bc;
@@ -111,20 +150,20 @@
     text-align: center;
     line-height: 1.1;
 ">
-  Single Portal<br>
-  of Interactive<br>
-  Public Services
-</div>
+        Single Portal<br>
+        of Interactive<br>
+        Public Services
+      </div>
 
-  </div>
+    </div>
 
-  <!-- Герб по центру -->
-  <div style="position: absolute; left: 50%; top: 0; transform: translateX(-50%); text-align:center;">
-    <img src="http://api.bildung.uz/static/img/2.jpg" alt="Emblem" style="height:90px;">
-  </div>
+    <!-- Герб по центру -->
+    <div style="position: absolute; left: 50%; top: 0; transform: translateX(-50%); text-align:center;">
+      <img src="{% static 'img/2.jpg' %}" alt="Emblem" style="height:90px;">
+    </div>
 
-  <!-- Текст министерства справа -->
-  <div style="
+    <!-- Текст министерства справа -->
+    <div style="
     position: absolute;
     right: 0;
     top: 0;
@@ -134,116 +173,122 @@
     color: #444;
     line-height: 1.2;
 ">
-  <b>
-    Ministry of<br>
-    Employment and<br>
-    Labor Relations<br>
-    of the Republic<br>
-    of Uzbekistan
-  </b>
-</div>
-
-</header>
-
-
-<div class="meta" style="font-size:10pt; margin-top:8px; line-height:1.3;">
-  <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-    <div>
-      <b>No:</b> {{ doc_number }}<br>
-      <b>Document creation date:</b> {{ date }}
+      <b>
+        Ministry of<br>
+        Employment and<br>
+        Labor Relations<br>
+        of the Republic<br>
+        of Uzbekistan
+      </b>
     </div>
-    <div style="text-align:right;">
-      <b>Document issued:</b> {{ full_name }}<br>
-      <b>PINFL:</b> {{ pinfl }}
+
+  </header>
+
+
+  <div class="meta" style="font-size:10pt; margin-top:8px; line-height:1.3;">
+    <div style="display:flex; justify-content:space-between;">
+      <div>
+        <b>No:</b> {{ doc_number }}<br>
+        <b>Document creation date:</b> {{ date }}<br>
+      </div>
+      <div style="text-align:right;">
+        <b>Document issued:</b> {{ full_name }}
+        <b>PINFL:</b> {{ pinfl }}
+      </div>
     </div>
   </div>
-</div>
 
 
 
-<h2>INCOME STATEMENT</h2>
+  <h2>INCOME STATEMENT</h2>
 
-<p>
-  <b>Name:</b> {{ full_name }}<br>
-  <b>PINFL:</b> {{ pinfl }}<br><br>
-  Issued in that the above person has received the following income:
-</p>
+  <p>
+    <b>Name:</b> {{ full_name }}<br>
+    <b>PINFL:</b> {{ pinfl }}<br><br>
+    Issued in that the above person has received the following income:
+  </p>
 
-  
-<table>
-  <thead>
-    <tr>
-      <th>Year</th>
-      <th>Month</th>
-      <th>Enterprise</th>
-      <th>Accrued wage (UZS)</th>
-      <th>Personal Income Tax (PIT)</th>
-      <th>INPS</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for row in incomes %}
-    <tr>
-      <td>2025</td>
-      <td>{{ row.month }}</td>
-      <td>{{ row.company }}</td>
-      <td>{{ row.salary }}</td>
-      <td>{{ row.tax }}</td>
-      <td>0</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
 
-<div class="footer-wrap" style="margin-top: 25px; page-break-inside: avoid;">
-  <table class="footer-table" style="width:100%; border-collapse:collapse; table-layout:fixed;">
-    <tr>
-      <!-- ЛЕВАЯ ЧАСТЬ: текст -->
-      <td style="
-          width:75%;
+  <table>
+    <thead>
+      <tr>
+        <th>Year</th>
+        <th>Month</th>
+        <th>Enterprise</th>
+        <th>Accrued wage (UZS)</th>
+        <th>Personal Income Tax (PIT)</th>
+        <th>INPS</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in incomes %}
+      <tr>
+        <td>{{ row.year }}</td>
+        <td>{{ row.month }}</td>
+        <td>{{ row.company }}</td>
+        <td>{{ row.salary }}</td>
+        <td>{{ row.tax }}</td>
+        <td>0</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="footer-wrap" style="margin-top: 25px; page-break-inside: avoid;">
+    <table class="footer-table" style="width:100%; border-collapse:collapse; table-layout:fixed;">
+      <tr>
+        <!-- ЛЕВАЯ ЧАСТЬ: текст во всю высоту, выровнен по ширине -->
+        <td style="
+          width:70%;
           vertical-align:top;
-          padding-right:15px;
-          font-size:8.5pt;
+          padding-right:10px;
+          font-size:10pt;
           text-align:justify;
           line-height:1.2;
       ">
-        This document is a copy of an electronic document generated in accordance with the provision on the Single Portal of Interactive Public Services approved by the provision of the Cabinet of Ministers of the Republic of Uzbekistan dated September 15, 2017 No. 728.
-        To check the accuracy of the information specified in the copy of the electronic document, go to the website
-        repo.gov.uz and enter the unique number of the electronic document, or scan the QR code using a mobile device.
-        <b>Attention!</b> In accordance with the provision of the Cabinet of Ministers of the Republic of Uzbekistan dated September 15, 2017 No. 728, the information contained in electronic documents is legitimate.
-        It is strictly forbidden for state bodies to refuse to accept copies of electronic documents generated on the Single Portal of Interactive Public Services.
-      </td>
+          This document is a copy of an electronic document generated in accordance with the provision on the Single
+          Portal of Interactive Public Services approved by the provision of the Cabinet of Ministers of the Republic of
+          Uzbekistan dated September 15, 2017 No. 728.
+          To check the accuracy of the information specified in the copy of the electronic document, go to the website
+          repo.gov.uz and enter the unique number of the electronic document, or scan the QR code using a mobile device.
+          Attention! In accordance with the provision of the Cabinet of Ministers of the Republic of Uzbekistan dated
+          September 15, 2017 No. 728, the information contained in electronic documents is legitimate.
+          It is strictly forbidden for state bodies to refuse to accept copies of electronic documents generated on the
+          Single Portal of Interactive Public Services.
+        </td>
 
-      <!-- ПРАВАЯ ЧАСТЬ: код + QR-код -->
-      <td style="
-          width:25%;
+        <!-- СРЕДИНА: крупный код -->
+        <td style="
+          width:10%;
+          text-align: right;
+          vertical-align:middle;
+      ">
+          <div style="
+            font-family:Cambria, serif;
+            font-size:18pt;
+            font-weight:bold;
+            letter-spacing:2px;
+        ">
+            {{ code }}
+          </div>
+        </td>
+
+        <!-- ПРАВО: QR-код -->
+        <td style="
+          width:20%;
           text-align:right;
           vertical-align:middle;
           padding:0;
       ">
-        <div style="display:flex; align-items:center; justify-content:flex-end; gap:15px;">
-          <!-- Код -->
-          <div style="
-              font-family:'Courier New', monospace;
-              font-size:16pt;
-              font-weight:bold;
-              letter-spacing:1px;
-              white-space:nowrap;
-          ">
-            {{ code }}
-          </div>
-          
-          <!-- QR-код -->
           <img src="{{ qr_data }}" alt="QR" style="
-              width:0.95in;
-              height:0.95in;
-              object-fit:contain;
-          ">
-        </div>
-      </td>
-    </tr>
-  </table>
-</div>
-
+            width:1.22in;
+            height:1.22in;
+            object-fit:contain;
+        ">
+        </td>
+      </tr>
+    </table>
+  </div>
 </body>
+
 </html>

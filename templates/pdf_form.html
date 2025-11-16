@@ -8,10 +8,37 @@
 
     <table id="income-table" border="1" style="border-collapse:collapse;">
         <tr>
-            <th>Месяц</th><th>Организация</th><th>Сумма</th><th>Налог</th><th></th>
+            <th>Год</th>
+            <th>Месяц</th>
+            <th>Организация</th>
+            <th>Сумма</th>
+            <th>Налог</th>
+            <th></th>
         </tr>
         <tr>
-            <td><input name="month[]" placeholder="Сентябрь 2024"></td>
+            <td>
+                <select name="year[]" class="year-select"></select>
+            </td>
+
+            <td>
+                <select name="month[]">
+                    <option value="">Month</option>
+                    <option>January</option>
+                    <option>February</option>
+                    <option>March</option>
+                    <option>April</option>
+                    <option>May</option>
+                    <option>June</option>
+                    <option>July</option>
+                    <option>August</option>
+                    <option>September</option>
+                    <option>October</option>
+                    <option>November</option>
+                    <option>December</option>
+                </select>
+
+            </td>
+
             <td><input name="company[]" placeholder="BRANDLIFE LLC"></td>
             <td><input name="salary[]" placeholder="11 400 000"></td>
             <td><input name="tax[]" placeholder="1 368 000"></td>
@@ -19,16 +46,42 @@
         </tr>
     </table>
 
+    <script>
+        function fillYears(select) {
+            const current = new Date().getFullYear();
+            const start = current - 10;
+
+            select.innerHTML = '<option value="">Год</option>';
+            for (let y = current; y >= start; y--) {
+                select.insertAdjacentHTML("beforeend",
+                    `<option value="${y}">${y}</option>`
+                );
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.year-select').forEach(fillYears);
+        });
+
+        function addRow() {
+            const table = document.getElementById('income-table');
+            const row = table.rows[1].cloneNode(true);
+
+            // очистить inputs
+            row.querySelectorAll('input').forEach(input => input.value = '');
+
+            // пересоздать выпадающий список года
+            const yearSelect = row.querySelector('.year-select');
+            fillYears(yearSelect);
+
+            // очистить месяц
+            row.querySelectorAll('select[name="month[]"]').forEach(sel => sel.value = '');
+
+            table.appendChild(row);
+        }
+    </script>
+
+
     <br>
     <button type="submit">Создать PDF</button>
 </form>
-
-<script>
-function addRow(){
-  const table = document.getElementById('income-table');
-  const row = table.rows[1].cloneNode(true);
-  // очищаем значения, чтобы не копировать предыдущие
-  row.querySelectorAll('input').forEach(input => input.value = '');
-  table.appendChild(row);
-}
-</script>
