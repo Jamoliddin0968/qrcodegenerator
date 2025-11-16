@@ -1,17 +1,22 @@
 import os
 import qrcode
+import uuid
 from io import BytesIO
 from django.conf import settings
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 from docx import Document
 from docx.shared import Inches,Pt
-from docx.oxml import OxmlElement
-from docx.oxml.ns import qn
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.enum.table import WD_TABLE_ALIGNMENT, WD_CELL_VERTICAL_ALIGNMENT
 from .models import UploadedFile
-
+import base64
+import random
+from datetime import datetime
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+from weasyprint import HTML
+from django.conf import settings
 
 def upload_docx(request):
     if request.method == 'POST' and request.FILES.get('file'):
@@ -113,25 +118,13 @@ def verify_file(request, uuid):
 
     return render(request, 'index.html', {'uuid': uuid})
 
-import uuid
-import qrcode
-import base64
-import random
-from io import BytesIO
-from datetime import datetime
-from django.http import HttpResponse
-from django.template.loader import render_to_string
-from weasyprint import HTML
-from django.conf import settings
-from .models import UploadedFile
-import os
-
 def create_pdf_view(request):
     if request.method == "POST":
         full_name = request.POST.get("full_name")
         pinfl = request.POST.get("pinfl")
 
         # собираем строки таблицы
+        years = request.POST.getlist("year[]")
         months = request.POST.getlist("month[]")
         companies = request.POST.getlist("company[]")
         salaries = request.POST.getlist("salary[]")
@@ -139,13 +132,14 @@ def create_pdf_view(request):
 
         incomes = []
         for i in range(len(months)):
-            if (months[i] or companies[i] or salaries[i] or taxes[i]):
+            if (years[i] or months[i] or companies[i] or salaries[i] or taxes[i]):
                 incomes.append({
+                    "year": (years[i] or "").strip(),
                     "month": (months[i] or "").strip(),
                     "company": (companies[i] or "").strip(),
                     "salary": (salaries[i] or "").strip(),
                     "tax": (taxes[i] or "").strip(),
-                })
+        })
 
         # создаём запись (пока без файла)
         db_file = UploadedFile.objects.create(
