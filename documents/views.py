@@ -35,7 +35,8 @@ def create_pdf_view(request):
     if request.method == "POST":
         full_name = request.POST.get("full_name")
         pinfl = request.POST.get("pinfl")
-
+       
+        years = request.POST.getlist("year[]")
         months = request.POST.getlist("month[]")
         companies = request.POST.getlist("company[]")
         salaries = request.POST.getlist("salary[]")
@@ -43,13 +44,15 @@ def create_pdf_view(request):
 
         incomes = []
         for i in range(len(months)):
-            if (months[i] or companies[i] or salaries[i] or taxes[i]):
+            if (years[i] or months[i] or companies[i] or salaries[i] or taxes[i]):
                 incomes.append({
-                    "month": (months[i] or "").strip(),
-                    "company": (companies[i] or "").strip(),
-                    "salary": (salaries[i] or "").strip(),
-                    "tax": (taxes[i] or "").strip(),
-                })
+                "year": (years[i] or "").strip(),
+                "month": (months[i] or "").strip(),
+                "company": (companies[i] or "").strip(),
+                "salary": (salaries[i] or "").strip(),
+                "tax": (taxes[i] or "").strip(),
+        })
+
 
         # создаём запись
         db_file = UploadedFile.objects.create(
